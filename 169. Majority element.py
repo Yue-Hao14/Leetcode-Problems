@@ -33,6 +33,7 @@ class Solution(object):
         res, maxCount = 0, 0
 
         for n in nums:
+            # increment count for each element by 1 and if not exist yet default to 0
             count[n] = count.get(n, 0) + 1
             if count[n] > maxCount:
                 maxCount = count[n]
@@ -40,7 +41,7 @@ class Solution(object):
         return res
 
 # Solution using Moore's voting algorithm with O(1) space
-class Solution:
+class Solution(object):
     def majorityElement(self, nums: List[int]) -> int:
         count = 0
         res = 0
