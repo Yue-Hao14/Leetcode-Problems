@@ -5,7 +5,7 @@ class Solution(object):
         :rtype: int
         """
         # set 2 pointers
-        # left pointer track when to buy
+        # left pointer track when to buy, and wanna stay at lowest price
         # right pointer track when to sell
         # iterate through the array to find the maxProfit
             # if right > left, check if need to update maxProfit, right+1
@@ -14,7 +14,8 @@ class Solution(object):
 
         while right < len(prices):
             current_profit = prices[right] - prices[left]
-            if prices[right] > prices[left]:
+            # profitable?
+            if current_profit > 0:
                 max_profit = max(current_profit, max_profit)
             else:
                 left = right
