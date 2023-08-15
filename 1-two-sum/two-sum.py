@@ -5,11 +5,19 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        # set 2 pointers (i and j) to iterate through the array
+
+        # build a hash table to store nums[i] and its index i
+        numMap = {}
         for i in range(len(nums)):
-            num1 = nums[i]
-            for j in range(i+1,len(nums)):
-                num2 = nums[j]
-                if num1 + num2 == target:
-                    return [i,j]
+            numMap[nums[i]] = i
+
+        # calculate complement = target - nums[i]
+        # check to see if complement exist in hash table
+            # if yes, return [i, numMap[complement]]
+        for i in range(len(nums)):
+            complement = target - nums[i]
+            if complement in numMap and numMap[complement] != i:
+                return [i, numMap[complement]]
+
         return [] # no solution found
+
