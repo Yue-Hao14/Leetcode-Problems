@@ -12,3 +12,4 @@ class Solution(object):
                 num2 = nums[j]
                 if num1 + num2 == target:
                     return [i,j]
+        return [] # no solution found
