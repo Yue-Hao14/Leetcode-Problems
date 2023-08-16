@@ -7,7 +7,7 @@ class Solution(object):
         """
         # heat map to store count of each element
         count = {} 
-        # list where index is the count
+        # nested list where index is the count/frequency, inner list holds element with the same frequency
         freq = [[] for i in range(len(nums) + 1)] 
 
         # count each element and store it in count heat map
@@ -20,8 +20,10 @@ class Solution(object):
             freq[count].append(element)
         print(freq)
 
+        # check from last index/highest frequency of the freq nested list 
         result = []
-        for i in range(len(freq) - 1, 0, -1):
+        for i in range(len(freq) - 1, 0, -1): # check from back to front
+            # add inner list's element to result list until result list's length equal to k, then return result list
             for n in freq[i]:
                 result.append(n)
                 if len(result) == k:
