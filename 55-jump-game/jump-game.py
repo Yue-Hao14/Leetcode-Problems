@@ -14,12 +14,14 @@ class Solution:
         curr = len(nums) - 2 # 2nd to last index in nums
 
         # while curr > 0:
-        # iterate backwards to check if curr 
+        # iterate backwards until i = 0
+            # check if curr + nums[curr] which is furthest it can jump >= target
         for i in range(curr, -1, -1): 
             if curr + nums[curr] >= target:
                 target = curr
             curr -= 1
-        
+
+        # once target is at index 0, means we can reach front from back, then True
         return target == 0
 
         
