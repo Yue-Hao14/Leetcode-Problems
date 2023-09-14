@@ -5,26 +5,30 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: List[int]
         """
-        # brute force method with time complexity O(n*m)and space complexity O(m)
+        # stack method with time complexity O(n+m), space O(m)
+
+        # idea:
+        # Hashmap nums1 with key=index, value=num, so it's easy to find if num in nums2 exist in nums1 and its index
+        # compare num in nums2 with a stack, if less than top of stack, add to it; if greater than top of stack, that means this num greater than anything in the stack, so find those smaller nums's index in nums1 and add current num to res
+
 
         # create a hashmap to num in nums1 as value and corresponding index as key
         nums1Idx = { n:i for i, n in enumerate(nums1)}
         # create an array to store results with -1 default value
         res = [-1] * len(nums1)
 
+        # create a stack to store nums in nums2
+        stack = []
         # iterate through nums2
         for i in range(len(nums2)):
             current = nums2[i]
-            # if current num in nums2 does not exist in nums1, skip
-            if current not in nums1Idx:
-                continue
-            # find next greater element of current num in nums2    
-            for j in range(i+1, len(nums2)):
-                next = nums2[j]
-                if next > current:
-                    # find the index of same num in nums1
-                    idx = nums1Idx[current]
-                    # add next greater element to the right index in result array and stop this iteration
-                    res[idx] = next
-                    break
+            # compare current vs. top of stack, if greater, find smaller nums' index, then add current to res at coresponding index
+            while stack and current > stack[-1]:
+                val = stack.pop()
+                idx = nums1Idx[val]
+                res[idx] = current
+            # add current to stack only if it exists in nums1
+            if current in nums1Idx:
+                stack.append(current)
+                
         return res
