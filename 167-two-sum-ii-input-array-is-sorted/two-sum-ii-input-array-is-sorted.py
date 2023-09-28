@@ -1,29 +1,21 @@
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        # idea: O(n) time and space
-        # build a hashmap with key of num and value of target - num
-        # iterate through the array
-        # look up its target-num in hashmap and check if it exists in array and its index
+        # idea: Two pointer method O(n) time, O(1) space
+        # have left and right 2 pointers to start from beg and end of array
+        # check if sum of 2 pointers larger than target, move right inward
+        # if sum of 2 pointers smaller than target, move left inward
+        # until sum of 2 pointers equal to target
 
         # code: 
-        hashmap = {}
-        res = []
+        left, right = 0, len(numbers)-1
 
-        # build hashmap
-        for num in numbers:
-            hashmap[num] = target - num
         
         # iterate through array
-        for i, num in enumerate(numbers):
-            diff = hashmap[num]
-            if diff in numbers and diff != num:
-                res.append(i + 1)
-                res.append(numbers.index(diff) + 1)
-                break
-            if diff in numbers and diff == num:
-                res.append(i + 1)
-                res.append(numbers.index(diff) + 2)
-                break
-        
-        return res
+        while left < right:
+            if numbers[left] + numbers[right] > target:
+                right -= 1
+            elif numbers[left] + numbers[right] < target:
+                left += 1
+            else:
+                return [left+1, right+1]
         
