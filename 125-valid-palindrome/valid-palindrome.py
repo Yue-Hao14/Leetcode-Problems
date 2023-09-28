@@ -1,35 +1,30 @@
-class Solution(object):
-    def isPalindrome(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
-        # set left and right pointers at begining and end of the string
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        # idea: time O(n), space O(1)
+        # write a helper function to determine if it's alphanumeric character
+        # in main function:
+        # set 2 pointer from beg and end of string
+        # check if 2 pointers equal, if no, return False, if yes, continue go inwards
+
         left, right = 0, len(s) - 1
 
         while left < right:
-            # if left pointer is not an alphanumeric character, 
-            # increment it to next character
-            while left < right and not self.alphaNum(s[left]):
+            # if not alphanumeric character, go inwards
+            while left < right and not self.alphanum(s[left]):
                 left += 1
-            # if right pointer is not an alphanumeric character, 
-            # decrement it to previou character
-            while right > left and not self.alphaNum(s[right]):
+            while left < right and not self.alphanum(s[right]):
                 right -= 1
-            # if left character != right character, not palindrome
+            # once both left and right are alphanumeric characters, check if the same
             if s[left].lower() != s[right].lower():
                 return False
-
-            # increment/decrement left and right pointers to check next pair
-            left += 1
-            right -= 1
-        # return True if all left == right
+            else:
+                left += 1
+                right -= 1
         return True
-            
-
-    def alphaNum(self, character):
-        """
-        check if character is an alphanumeric character
-        """
-        return (("a" <= character.lower() <= "z") 
-        or ("0" <= character.lower() <= "9"))
+    
+    def alphanum(self, c):
+            return (
+                ord("A") <= ord(c) <= ord("Z")
+                or ord("a") <= ord(c) <= ord("z")
+                or ord("0") <= ord(c) <= ord("9")
+            )
