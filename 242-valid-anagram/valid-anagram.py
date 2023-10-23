@@ -1,24 +1,20 @@
-class Solution(object):
-    def isAnagram(self, s, t):
-        """
-        :type s: str
-        :type t: str
-        :rtype: bool
-        """
-        # create 2 hash maps for each string to store the count of each letter
-        # compare the 2 hash maps
-        # if equal, return true; otherwise, false
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        # idea: time O(n) n = length of s or t; space O(n)
+        # use a hashmap, key = letter, value = count of this letter
+        # iterate through s and increment hashmap
+        # iterate through t and decrement hashmap
+        # if at the end, there is no value in hashmap > 0, then true
 
-        sCount, tCount = {}, {}
+        # code:
+        res = {}
 
         for letter in s:
-            sCount[letter] = sCount.get(letter,0) + 1
+            res[letter] = res.get(letter,0) + 1
         
         for letter in t:
-            tCount[letter] = tCount.get(letter,0) + 1
- 
-        if sCount == tCount:
-            return True
+            res[letter] = res.get(letter,0) - 1
+        
+        return set(res.values()) == {0} # convert value array to set so if all values in the list are 0, then it will be {0}
 
-        return False
-
+        
