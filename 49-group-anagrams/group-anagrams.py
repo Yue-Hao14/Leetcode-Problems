@@ -1,31 +1,22 @@
-class Solution(object):
-    def groupAnagrams(self, strs):
-        """
-        :type strs: List[str]
-        :rtype: List[List[str]]
-        """
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        # idea: O(m*n) m = # of word in strs, n = avg length of each word
+        # use a hashmap to store anagrams, key = letters in each word, value = anagrams in an array
+        # for each word, we count what letter in it by building an array of 26 index with 0 value to start with
+            # each index represent a letter, so index 0 is a
+            # example: abc = [1,1,1,0,0,0......0]
+        # words with same letters got stored together in the hashmap
 
-        # time complexity O(m*n), m is number of string in strs, n is average length of each string in strs
+        # code:
+        res = defaultdict(list) # hashmap to store results
 
-        # idea:
-        # iterate through strs and count letter in each str, str has same letter count are anagrams
-        # store anagram in a hashmap, where key = letter count([1,1,1,0...0] for "abc"), value = ["abc","bac","cab"]
-        # we return the values of hashmap
+        for word in strs:
+            count = [0] * 26 # a....z counter
 
-        # create hashmap with value default to an empty list/array, key = "1e1a1t", value = ["eat","ate","tea"]
-        res = defaultdict(list) 
-
-        for str in strs:
-            count = [0] * 26 # [0,0.....0] each 0 represents counts of a-z
-
-            # iterate through the string to increment each letter in the count array
-            for letter in str:
-                count[ord(letter) - ord("a")] += 1 #increment count at the specific index corresponding to the letter, like letter "a" in char, increment count[0] by 1; letter "z" in char, then increment count[25] by 1
+            for letter in word:
+                count[ord(letter) - ord("a")] += 1
             
-            # append current str to same charCount in the res hashmap
-            res[tuple(count)].append(str) # change count from list to tuple as list cannot be key for hash map in Python
-
+            res[tuple(count)].append(word) # in python, array/list cannot be key so make it to a tuple
+        
         return res.values()
-
-
         
