@@ -6,21 +6,20 @@
 #         self.right = right
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        # idea:
-        # pre-order transversal both trees and push each node to an array
-        # if 2 array ==, then same
+        # idea: O(p+q)
+        # check each node from top down to see if each node in p and q are the same
 
         # code:
-        p_arr = []
-        q_arr = []
-
-        def pre_order_dfs(root):
-            if not root:
-                return [None]
-
-            return [root.val] + pre_order_dfs(root.left) + pre_order_dfs(root.right)
+        # if both of them null, then same tree
+        if not p and not q:
+            return True
+        # if one of them null, the other not null, then not same tree
+        if not p or not q:
+            return False
+        # if node's val not the same, then not same tree
+        if p.val != q.val:
+            return False
         
-        p_arr = pre_order_dfs(p)
-        q_arr = pre_order_dfs(q)
-
-        return p_arr == q_arr
+        # after checking curr node's val, now recursive step to check other nodes to see if they are the same as well
+        return (self.isSameTree(p.left, q.left) and
+                self.isSameTree(p.right, q.right))
