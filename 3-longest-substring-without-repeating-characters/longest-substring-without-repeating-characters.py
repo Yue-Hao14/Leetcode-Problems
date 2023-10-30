@@ -1,22 +1,20 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        # idea:
+        # idea: sliding window method O(n) time and space
         # iterate through string
         # push each string to an array until find a repeating characters, then count len(array) to update counter and clear arr
 
         # code:
-        counter = 0
-        arr = []
+        char_set = set()
+        left = 0
+        res = 0
 
-        for char in s:
-            if char not in arr:
-                arr.append(char)
-                counter = max(counter, len(arr))
-            else:
-                counter = max(counter, len(arr))
-                index = arr.index(char)
-                arr = arr[index+1:]
-                arr.append(char)
+        for right in range(len(s)):
+            while s[right] in char_set:
+                char_set.remove(s[left])
+                left += 1
+            char_set.add(s[right])
+            res = max(res, right - left +1)
         
-        return counter
+        return res
         
